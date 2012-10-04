@@ -1,57 +1,56 @@
 <?php
 
-class carro
-{
-	
-	public $nome_modelo = "";
-	// public $velocidade = '100km/h';
- 	
- 	public function nome($nome) {
+class veiculo{
+    public $nome_modelo = "";
+
+    public function nome($nome) {
         $this->nome_modelo = $nome;
     }
 
-    function acelerar($velocidade='100km/h')
-    {
-        echo 'O ' . $this->nome_modelo . ' está acelerando a ' . $velocidade; 
-        // echo 'Estou acelerando a ' . $velocidade; 
-    }
 }
 
-class picape extends carro
+class carro extends veiculo
 {
-	public $peso_carregado = 0;
-	public $peso_maximo = 500;
- 	
- 	function define_cacamba($peso) {
-        if ($peso > $this->peso_maximo) 
-        	echo "A caçamba pode ter até $this->peso_maximo kilos";
+    public $velocidade_ini = 0;
+    public $velocidade_max = 220;
+   
+    function define_velocidade($velocidade){
+        if($velocidade > $this->velocidade_max)
+            echo "Limite de velocidade $this->nome_modelo: $this->velocidade_max KM/h";
         else
-        	$this->peso_carregado = $peso;
+            $this->velocidade_ini = $velocidade;
     }
 
-    public function transportar($peso=100)
+    function acelerar($velocidade=0)
     {
-    	$this->define_cacamba($peso);
-        echo 'O ' . $this->nome_modelo . ' está carregando ' . $this->peso_carregado . ' kilos'; 
+        $this->define_velocidade($velocidade);
+        echo '<br /> ' . $this->nome_modelo . ' esta acelerando a ' . $this->velocidade_ini . 'KM/h.<br />'; 
     }
 }
 
-$carro1 = new carro;
-$carro1->nome('Siena');
-$carro1->acelerar('200Km/h');
+class picape extends carro 
+{
+    public $peso_carregado = 0;
+    public $peso_maximo = 500;
+    
+    function define_cacamba($peso) {
+        if ($peso > $this->peso_maximo)
+            echo "Limite de peso $this->nome_modelo: $this->peso_maximo Kg";
+        else
+            $this->peso_carregado = $peso;
+    }
 
+    public function transportar($peso=0)
+    {
+        $this->define_cacamba($peso);
+        echo '<br /> ' . $this->nome_modelo . ' esta carregando ' . $this->peso_carregado . ' kilos.'; 
+    }
+}
+
+$veiculo = new picape;
+$veiculo->nome('S10');
+$veiculo->acelerar(350);
 echo '<br/>';
-
-$carro2 = new carro;
-$carro2->nome('Bravo');
-$carro2->acelerar('250Km/h');
-
-echo '<br/>';
-
-$carro3 = new picape;
-$carro3->nome('Strada');
-$carro3->acelerar('150Km/h');
-echo '<br/>';
-$carro3->transportar(400);
+$veiculo->transportar(700);
 
 ?>
